@@ -1,4 +1,4 @@
-## RxJS China （翻译中）
+## RxJS 中文 （翻译中）
 
 基于 JavaScript 的 ReactiveX 库。
 
