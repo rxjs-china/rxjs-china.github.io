@@ -1,5 +1,11 @@
 {
   "title":"RxJS 中文",
   "description":"RxJS 中文文档",
-  "language":"zh-hans"
+  "language":"zh-hans",
+  "plugins": ["ga"],
+  "pluginsConfig": {
+    "ga": {
+      "token": "UA-89585420-1"
+    }
+  }
 }
