@@ -2,12 +2,12 @@
   "title":"RxJS 中文",
   "description":"RxJS 中文文档",
   "language":"zh-hans",
-  "plugins": ["ga","baiduana"],
+  "plugins": ["ga","3-ba"],
   "pluginsConfig": {
     "ga": {
       "token": "UA-89585420-1"
     },
-    "baidu": {
+    "3-ba": {
       "token": "a5c3f196acc742442213eefa19e89a78"
     }
   }
