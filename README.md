@@ -29,21 +29,135 @@
 
 * 我已经有一个被观察者了……
     * 我想改变每一个被发出的值
-    * 我想从发出的值中挑出一个的属性
+        * 变成一个常量
+            * 你需要 [mapTo](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-mapTo)
+        * 计算出得出一个新的值
+            * 你需要 [map](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-map)
+    * 我想从每一个值中挑出一个的属性
+        * 你需要 [pluck](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-pluck)
     * 我想在不影响原有的值得情况下使用这些值
+        * 你需要 [do](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-do)
     * 我只想要其中一部分值
-    * 我想删掉一些值
+        * 用自定义的规则来过滤这些值
+            * 你需要 [filter](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-filter)
+        * 我想要最开始的一些值
+            * 只要第一个值
+                * 你需要 [first](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-first)
+            * 不止一个值
+                * 你需要 [take](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-take)
+            * 自定义需要哪些值
+                * 你需要 [takeWith](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeWhile)
+        * 我想要第 N 个值
+            * 你需要 [elementAt](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-elementAt)
+        * 我想要末尾的一些值
+            * 只最后一个值
+                * 你需要 [last](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-last)
+            * 自定义需要哪些值
+                * 你需要 [takeLast](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeLast)
+        * 直到另一个被观察者发出值或结束
+            * 你需要 [takeUntil](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-takeUntil)
+    * 我想忽略一些值
+        * 忽略全部
+            * 你需要 [ignoreElements](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-ignoreElements)
+        * 忽略开头的值
+            * 忽略 N 个
+                * 你需要 [skip](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-skip)
+            * 自定义忽略哪几个
+                * 你需要 [skipWhile](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-skipWhile)
+        * 直到另一个被观察者发出值
+            * 你需要 [skipUntil](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-skipUntil)
+        * 如果某个值重复出现就忽略
+            * 值相等就算是重复
+                * 重复的两个值必须连续出现
+                    * 你需要 [distinctUntilChanged](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-distinctUntilChanged)
+                * 重复的两个值不须连续出现
+                    * 你需要 [distinct](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-distinct)
+            * 值的某个属性相等就算是重复
+                * 重复的两个值必须连续出现
+                    * 你需要 [distinctUntilKeyChanged](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-distinctUntilKeyChanged)
+                * 重复的两个值不须连续出现
+                    * 你需要 [distinctKey](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-distinctKey)
+        * 忽略出现得太频繁的值
+            * 我只需要一个时间窗口内的第一个值
+                * 时间窗口由另一个被观察者决定
+                    * 你需要 [throttle](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-throttle)
+                * 每隔一段时间就算一个时间窗口
+                    * 你需要 [throttleTime](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-throttleTime)
+            * 我只需要一个时间窗口内的最后一个值
+                * 时间窗口由另一个被观察者决定
+                    * 你需要 [audit](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-audit)
+                * 每隔一段时间就算一个时间窗口
+                    * 你需要 [auditTime](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-auditTime)
+            * 在一段静默期后发出最后一个值
+                * 静默期由另一个被观察者决定
+                    * 你需要 [debounce](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-debounce)
+                * 静默期由时间决定
+                    * 你需要 [debounceTime](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-debounceTime)
     * 我想在所有的值上面做一些计算
+        * 然后只发出一个值
+            * 你需要 [reduce](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-reduce)
+        * 然后对应地发出每一个计算后的值
+            * 你需要 [scan](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-scan)
+        * 然后对应地发出每一个计算后的值，这个值是一个嵌套的被观察者(a nested Observable)
+            * 你需要 [mergeScan](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-mergeScan)
     * 我想对其元数据进行加工
-    * 如果一段时间没有交互
+        * 将 next, error, complete 这些事件都变成通知
+            * 你需要 [materialize](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-materialize)
+        * 我要知道每个值之间的时间间隔
+            * 你需要 [timeInterval](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-timeInterval)
+    * 如果一段时间没有发出值
         * 我想让它报错
-        * 我想让它变成另一个被观察者
+            * 你需要 [timeout](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-timeout)
+        * 我想订阅另一个被观察者
+            * 你需要 [timeoutWith](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-timeoutWith)
     * 我只希望它发出一个值
-        * 你需要的操作器是 single
+        * 你需要 [single](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-single)
     * 我想知道它发出了多少个值
+        * 你需要 [count](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-count)
     * 我想在最开始插入一个值
+        * 你需要 [startWidth](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-startWith)
     * 我想推迟它
+        * 我给定推迟时间
+            * 你需要 [delay](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-delay)
+        * 推迟时间由另一个被观察者决定
+            * 你需要 [delayWhen](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-delayWhen)
     * 我想对值进行分组
+        * 等它结束后再分组
+            * 把所有值变成一个数组
+                * 你需要 [toArray](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-toArray)
+            * 把所有值变成一个 Promise 对象
+                * 你需要 [toPromise](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-toPromise)
+        * 每个值与前一个值算一组
+            * 你需要 [pairwise](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-pairwise)
+        * 用一个规则把所有值分成两组
+            * 你需要 [partition](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-partition)
+        * 每 N 个值分一组
+            * 将这 N 个值作为一个数组发出
+                * 你需要 [bufferCount](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-bufferCount)
+            * 将这 N 个值作为一个被观察者发出
+                * 你需要 [windowCount](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-windowCount)
+        * 每隔一段时间分一组
+            * 将每组值作为一个数组发出
+                * 你需要 [bufferTime](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-bufferTime)
+            * 将每组值作为一个被观察者发出
+                * 你需要 [windowTime](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-windowTime)
+        * 根据另一个被观察者的发出动作来分组
+            * 将每组值作为一个数组发出
+                * 你需要 [buffer](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-buffer)
+            * 将每组值作为一个被观察者发出
+                * 你需要 [window](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-window)
+        * 根据一个按需生成的被观察者的发出动作来分组
+            * 将每组值作为一个数组发出
+                * 你需要 [bufferWhen](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-bufferWhen)
+            * 将每组值作为一个被观察者发出
+                * 你需要 [windowWhen](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-windowWhen)
+        * 用另一个被观察者 A 来开始分组，再用另一个被观察者 B 来结束分组
+            * 将每组值作为一个数组发出
+                * 你需要 [bufferToggle](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-bufferToggle)
+            * 将每组值作为一个被观察者发出
+                * 你需要 [windowToggle](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-windowToggle)
+        * 根据值分组
+            * 你需要 [groupBy](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-groupBy)
     * 我想让每个值变成一个新的被观察者
     * 我想在不打断链式调用的前提下，对它进行一些操作
     * 我想分享订阅 
