@@ -160,93 +160,133 @@ RxJS 是一个用 JavaScript 写的 ReactiveX 库。
                 * 你需要 [windowToggle](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-windowToggle)
         * 根据值分组
             * 你需要 [groupBy](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-groupBy)
-    * 我想让在一个新的被观察者中使用每一个值
+    * 我想为所有值启用一个新的被观察者
+        * 然后并行地从被观察者中发出值
+            * 发出的值都是一样的
+                * 那么你需要 [mergeMapTo](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-mergeMapTo)
+            * 发出的值是对原有值的加工
+                * 那么你需要 [mergeMap](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-mergeMap)
+        * 然后串行地从被观察者中发出值
+            * 发出的值都是一样的
+                * 那么你需要 [concatMapTo](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-concatMapTo)
+            * 发出的值是对原有值的加工
+                * 那么你需要 [concatMap](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-concatMap)
+        * 发出值的时候，取消之前尚未发出的值
+            * 发出的值都是一样的
+                * 那么你需要 [switchMapTo](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-switchMapTo)
+            * 发出的值是对原有值的加工
+                * 那么你需要 [switchMap](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-switchMap)
+            * 如果当前的值没有发完，下一个值就来了，那么取消下一个值
+                * 那么你需要 [exhaustMap](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-exhaustMap)
+        * 递归地启用新被观察者
+            * 那么你需要 [expand](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-expand)
     * 我想在不打断链式调用的前提下，对它进行一些操作
+        * 那么你需要 [let](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-let)
     * 我想分享订阅 
         * 通过一个常规对象
+            * 一旦出现第一个订阅者，就分享
+                * 那么你需要 [share](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-share)
+            * 需要我手动触发分享
+                * 那么你需要 [publish](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-publish)
         * 通过一个行为对象
+            * 那么你需要 [publishBehavior](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-publishBehavior)
         * 通过一个重播对象
+            * 那么你需要 [publishReplay](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-publishReplay)
         * 通过一个异步对象
+            * 那么你需要 [publishLast](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-publishLast)
         * 使用一个自定义的对象
+            * 那么你需要 [multicast](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-multicast)
         * 让它表现得想一个缓存
-            * 那么你需要的是 cache 
+            * 那么你需要 [cache](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-cache)
     * 当出现一个错误时
         * 我想创建一个新的被观察者
+            * 那么你需要 [catch](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-catch)
         * 我想重新订阅
+            * 马上重新订阅 
+                * 那么你需要 [retry](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-retry)
+            * 等到另一个被观察者发出值时再订阅
+                * 那么你需要 [retryWhen](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-retryWhen)
     * 当它完成时
         * 我想重新订阅
+            * 马上重新订阅 
+                * 那么你需要 [repeat](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-repeat)
+            * 等到另一个被观察者发出值时再订阅
+                * 那么你需要 [repeatWhen](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-repeatWhen)
         * 我想创建一个新的被观察者
+            * 那么你需要 [concat](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-concat)
     * 当它完成、出错或被取消订阅时，我想执行一个函数回调
-        * 你需要 finally
+        * 你需要 [finally](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-finally)
     * 我想要改变行程（何时开始、何时结束等）
-        * 改变的是订阅
+        * 改变订阅
+            * 那么你需要 [subscribeOn](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-subscribeOn)
         * 改变的是值
+            * 那么你需要 [observeOn](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-observeOn)
     * 我想将它与其他被观察者结合起来
         * 只从第一个发出值得被观察者那里获取值
-            * 你需要 race
+            * 你需要 [race](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-race)
         * 我希望得到任意一个被观察者的值
-            * 你需要 merge
+            * 你需要 [merge](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-merge)
         * 我想对值进行操作后，再发出值 
             * 每次发出值时，我要用到每个被观察者最后的值
-                * 你需要 combineLatest
+                * 你需要 [combineLatest](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-combineLatest)
             * 只有在它发出值时，我才要用到每个被观察者最后的值
-                * 你需要 withLatestFrom
+                * 你需要 [withLatestFrom](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-withLatestFrom)
             * 每个值只用一次
-                * 你需要 zip
+                * 你需要 [zip](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-zip)
 * 我已经有多个被观察者了，我想把他们组合成一个被观察者……
     * 我希望只从第一个发出值得被观察者那里获取值
-        * 你需要 race
+        * 你需要 [race](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-race)
     * 当它们都结束时，我希望得到通知
-        * 你需要 forkJoin
+        * 你需要 [forkJoin](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-forkJoin)
     * 我希望得到任意一个被观察者的值
-        * 你需要 merge
+        * 你需要 [merge](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-merge)
     * 我想对值进行操作后，再发出值 
         * 每次发出值时，我要用到每个被观察者最后的值
-            * 你需要 combineLatest
+            * 你需要 [combineLatest](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-combineLatest)
         * 每个值只用一次
-            * 你需要 zip
+            * 你需要 [zip](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-zip)
     * 我想对它们按顺序进行订阅
-        * 你需要 concat
+        * 你需要 [concat](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-concat)
 * 我需要创建一个被观察者……
     * 一个新的被观察者
         * 通过自定义的逻辑来创建
-            * 你需要 create
+            * 你需要 [create](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-create)
         * 通过一个状态机来创建
-            * 你需要 generate
+            * 你需要 [generate](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-generate)
         * 用来抛出一个错误
-            * 你需要 throw
+            * 你需要 [throw](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-throw)
         * 会结束，但是不发出任何值
-            * 你需要 empty
+            * 你需要 [empty](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-empty)
         * 什么都不发出
-            * 你需要 never
+            * 你需要 [never](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-never)
         * 从现有的事件中创建
             * 来自 DOM 或者 Node.js 等的事件
-                * 你需要 fromEvent
+                * 你需要 [fromEvent](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-fromEvent)
             * 使用 API 来添加或删除事件处理函数
-                * 你需要 fromEventPattern
+                * 你需要 [fromEventPattern](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-fromEventPattern)
         * 从 ES6 的 Promise 中创建
-            * 你需要 fromPromise
+            * 你需要 [fromPromise](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-fromPromise)
         * 从一个 Promise 或者事件源或者一个数组中创建
-            * 你需要 from
+            * 你需要 [from](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-from)
         * 它会迭代（iterates）
             * 遍历一个数组
-                * 你需要 fromArray
+                * 你需要 [fromArray](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-fromArray)
             * 遍历一个数字区间
-                * 你需要 range
+                * 你需要 [range](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-range)
             * 遍历你给定的参数
-                * 你需要 of
+                * 你需要 [of](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-of)
         * 根据定时器来发出值
             * 每隔一段时间发出值
-                * 你需要 interval
+                * 你需要 [interval](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-interval)
             * 一段时间后发出值
-                * 你需要 timer
+                * 你需要 [timer](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-timer)
         * 当它被订阅时才按需创建
-            * 你需要 defer
+            * 你需要 [defer](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-defer)
     * 将回调转化为被观察者
         * 普通回调风格的 API
-            * 你需要 bindCallback
+            * 你需要 [bindCallback](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-bindCallback)
         * Node.js 回调风格的 API
-            * 你需要 bindNodeCallback
+            * 你需要 [bindNodeCallback](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-bindNodeCallback)
 
 
 <script>
