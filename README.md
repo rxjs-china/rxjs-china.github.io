@@ -1,6 +1,8 @@
 ## RxJS 中文 （翻译中）
 
-基于 JavaScript 的 ReactiveX 库。
+[英文版](http://reactivex.io/rxjs/)
+
+RxJS 是一个用 JavaScript 写的 ReactiveX 库。
 
 本项目是对 [Reactive-Extensions/RxJS](http://reactivex.io/rxjs/) 的重写，在适当的时候会将其取代。
 本项目的目的是追求更好的性能、更清晰的模块化、更方便的调用堆栈信息，同时，本项目精简了 API 数量，可能会造成对旧版本不完全兼容，但我们会最大限度地做到向后兼容。
@@ -158,7 +160,7 @@
                 * 你需要 [windowToggle](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-windowToggle)
         * 根据值分组
             * 你需要 [groupBy](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-groupBy)
-    * 我想让每个值变成一个新的被观察者
+    * 我想让在一个新的被观察者中使用每一个值
     * 我想在不打断链式调用的前提下，对它进行一些操作
     * 我想分享订阅 
         * 通过一个常规对象
